@@ -1,0 +1,443 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOSKO CHEATS | ADMIN PANEL</title>
+<style>
+:root {
+  --bg:#080910; --panel:#11131f; --red:#ff263f;
+  --text:#f4f5fb; --muted:#9ca3b5; --border:#292c3c;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; min-height:100vh; color:var(--text);
+  background:radial-gradient(ellipse at top,#32101c 0%,#10111b 42%,#07080d 100%);
+  font-family:Arial,sans-serif; padding:22px;
+}
+button,input,select { font:inherit; }
+button {
+  border:0; cursor:pointer; padding:12px 16px; border-radius:10px;
+  background:var(--red); color:white; font-weight:bold;
+  transition:.2s;
+}
+button:hover { filter:brightness(1.15); transform:translateY(-1px); }
+button.secondary { background:#282b3b; }
+button.danger { background:#a9182a; }
+input,select {
+  width:100%; padding:13px; border-radius:10px;
+  border:1px solid var(--border); background:#090b13;
+  color:white; outline:none; margin-top:7px;
+}
+input:focus,select:focus { border-color:var(--red); }
+label { display:block; font-size:14px; color:#d9dbea; margin-top:15px; }
+.container { width:100%; max-width:950px; margin:auto; }
+.card {
+  background:rgba(17,19,31,.94); border:1px solid var(--border);
+  border-radius:18px; padding:22px; margin:18px 0;
+  box-shadow:0 12px 35px #0005;
+}
+h1,h2 { margin-top:0; }
+h1 { color:var(--red); letter-spacing:1px; }
+.subtitle,.muted { color:var(--muted); line-height:1.6; }
+.center { text-align:center; }
+.hidden { display:none !important; }
+.grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+.tabs { display:flex; gap:10px; flex-wrap:wrap; margin:15px 0; }
+.tabs button { flex:1; min-width:140px; }
+.tabs button.active { outline:2px solid #ff7282; }
+.message { padding:12px; border-radius:10px; margin-top:12px; display:none; }
+.message.show { display:block; }
+.message.error { background:#481520; color:#ffb7c0; }
+.message.ok { background:#123b2b; color:#a6ffd2; }
+.key-item {
+  background:#0a0c14; border:1px solid var(--border);
+  padding:15px; border-radius:12px; margin-top:12px;
+}
+.key-code {
+  direction:ltr; text-align:left; overflow-wrap:anywhere;
+  font-weight:bold; color:#ff6679; font-size:17px; margin-bottom:9px;
+}
+.key-meta { color:var(--muted); font-size:13px; line-height:1.8; }
+.key-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+.key-actions button { padding:9px 12px; }
+.badge { color:#a6ffd2; }
+@media(max-width:600px) {
+  body { padding:12px; }
+  .grid { grid-template-columns:1fr; }
+  .card { padding:16px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- تسجيل دخول الإدارة -->
+  <section id="loginScreen" class="card center" style="max-width:440px;margin:10vh auto">
+    <h1>MOSKO CHEATS</h1>
+    <h2>ADMIN PANEL</h2>
+    <p class="subtitle">أدخل مفتاح الإدارة للمتابعة</p>
+    <form id="loginForm">
+      <input id="adminPassword" type="password" placeholder="مفتاح الإدارة" autocomplete="current-password" required>
+      <button type="submit" style="width:100%;margin-top:14px">دخول لوحة التحكم</button>
+    </form>
+    <div id="loginMessage" class="message error"></div>
+    <p class="muted" style="font-size:12px">نسخة تجريبية محلية — ليست حماية سيرفر حقيقية</p>
+  </section>
+
+  <!-- لوحة التحكم -->
+  <main id="adminScreen" class="hidden">
+    <header class="card">
+      <h1>🔥 MOSKO ADMIN PANEL</h1>
+      <p class="subtitle">إنشاء المفاتيح وإدارة مدد صلاحيتها.</p>
+      <div class="grid">
+        <div>
+          <div class="muted">عدد المفاتيح</div>
+          <h2 id="totalKeys">0</h2>
+        </div>
+        <div>
+          <div class="muted">المفاتيح السارية</div>
+          <h2 id="activeKeys">0</h2>
+        </div>
+      </div>
+      <button id="logoutBtn" class="secondary">تسجيل الخروج</button>
+    </header>
+
+    <section class="card">
+      <h2>إنشاء مفتاح جديد</h2>
+      <div class="tabs">
+        <button id="randomTab" class="active" type="button">🎲 مفتاح عشوائي</button>
+        <button id="customTab" class="secondary" type="button">✍️ وضع مخصص</button>
+      </div>
+
+      <div id="randomMode">
+        <p class="muted">سيتم توليد 12 حرفًا أو رقمًا بعد MOSKO- تلقائيًا.</p>
+        <label for="randomDuration">مدة صلاحية المفتاح</label>
+        <select id="randomDuration">
+          <option value="1">ساعة واحدة</option>
+          <option value="6">6 ساعات</option>
+          <option value="12" selected>12 ساعة</option>
+          <option value="24">24 ساعة</option>
+          <option value="72">3 أيام</option>
+          <option value="168">7 أيام</option>
+          <option value="720">30 يومًا</option>
+          <option value="custom">مدة مخصصة</option>
+          <option value="0">بدون انتهاء تلقائي</option>
+        </select>
+        <div id="randomCustomDuration" class="hidden">
+          <label for="randomHours">المدة بالساعات</label>
+          <input id="randomHours" type="number" min="1" max="87600" placeholder="مثال: 48">
+        </div>
+        <button id="generateBtn" style="width:100%;margin-top:16px" type="button">توليد المفتاح العشوائي</button>
+      </div>
+
+      <div id="customMode" class="hidden">
+        <p class="muted">اكتب الجزء بعد MOSKO- أو اكتب المفتاح كاملًا.</p>
+        <label for="customKey">المفتاح الذي تريد إضافته</label>
+        <input id="customKey" dir="ltr" placeholder="مثال: MOSKO-ABC123DEF456">
+        <label for="customDuration">مدة صلاحية المفتاح</label>
+        <select id="customDuration">
+          <option value="1">ساعة واحدة</option>
+          <option value="6">6 ساعات</option>
+          <option value="12" selected>12 ساعة</option>
+          <option value="24">24 ساعة</option>
+          <option value="72">3 أيام</option>
+          <option value="168">7 أيام</option>
+          <option value="720">30 يومًا</option>
+          <option value="custom">مدة مخصصة</option>
+          <option value="0">بدون انتهاء تلقائي</option>
+        </select>
+        <div id="customCustomDuration" class="hidden">
+          <label for="customHours">المدة بالساعات</label>
+          <input id="customHours" type="number" min="1" max="87600" placeholder="مثال: 48">
+        </div>
+        <button id="addCustomBtn" style="width:100%;margin-top:16px" type="button">إضافة المفتاح</button>
+      </div>
+      <div id="createMessage" class="message"></div>
+    </section>
+
+    <section class="card">
+      <h2>🔑 قائمة المفاتيح</h2>
+      <input id="searchKey" placeholder="ابحث عن مفتاح..." dir="auto">
+      <div id="keysList"></div>
+      <button id="exportBtn" class="secondary" style="width:100%;margin-top:16px">تصدير قائمة المفاتيح JSON</button>
+    </section>
+
+    <section class="card">
+      <h2>🌐 اتصال السيرفر</h2>
+      <p class="muted">ضع رابط API عندما يكون جاهزًا. اختبار الاتصال هنا مبدئي فقط، ولا يعني أن إدارة المفاتيح أصبحت متصلة بالسيرفر.</p>
+      <label for="serverUrl">رابط API</label>
+      <input id="serverUrl" type="url" placeholder="https://example.com/api/keys" dir="ltr">
+      <button id="testServerBtn" style="width:100%;margin-top:12px">اختبار الاتصال</button>
+      <div id="serverMessage" class="message"></div>
+    </section>
+    <p class="muted center">MOSKO CHEATS © ADMIN PANEL</p>
+  </main>
+</div>
+
+<script>
+/*
+  تنبيه أمني:
+  كلمة المرور داخل HTML يمكن استخراجها من مصدر الصفحة.
+  LocalStorage محلي على هذا المتصفح فقط.
+  لا تستخدم هذه النسخة لإدارة مفاتيح حقيقية أو مدفوعة.
+*/
+const ADMIN_PASSWORD = "MOSKOCHEATSONTOP";
+const STORAGE_KEY = "mosko_admin_keys_v1";
+
+const $ = id => document.getElementById(id);
+let keys = loadKeys();
+let mode = "random";
+
+function loadKeys() {
+  try {
+    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    return Array.isArray(data) ? data : [];
+  } catch { return []; }
+}
+function saveKeys() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(keys));
+  renderKeys();
+}
+function showMessage(id, text, type="error") {
+  const el = $(id);
+  el.textContent = text;
+  el.className = "message show " + type;
+}
+function hideMessage(id) {
+  $(id).className = "message";
+}
+function formatDate(timestamp) {
+  if (!timestamp) return "بدون انتهاء تلقائي";
+  return new Date(timestamp).toLocaleString();
+}
+function isExpired(item) {
+  return item.expiresAt !== 0 && item.expiresAt <= Date.now();
+}
+function makeRandomKey() {
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const bytes = new Uint8Array(12);
+  if (window.crypto && crypto.getRandomValues) {
+    crypto.getRandomValues(bytes);
+  } else {
+    for (let i=0;i<12;i++) bytes[i] = Math.floor(Math.random()*256);
+  }
+  let suffix = "";
+  for (const b of bytes) suffix += alphabet[b % alphabet.length];
+  return "MOSKO-" + suffix;
+}
+function getDuration(prefix) {
+  const value = $(prefix + "Duration").value;
+  if (value === "0") return 0;
+  if (value === "custom") {
+    const hours = Number($(prefix + "Hours").value);
+    if (!Number.isFinite(hours) || hours < 1 || hours > 87600) {
+      throw new Error("اكتب مدة مخصصة صحيحة بالساعات.");
+    }
+    return hours;
+  }
+  return Number(value);
+}
+function normalizeKey(value) {
+  let key = value.trim().toUpperCase().replace(/\s+/g, "");
+  if (!key.startsWith("MOSKO-")) key = "MOSKO-" + key;
+  if (!/^MOSKO-[A-Z0-9]{12}$/.test(key)) {
+    throw new Error("المفتاح يجب أن يكون MOSKO- متبوعًا بـ 12 حرفًا أو رقمًا.");
+  }
+  return key;
+}
+function addKey(key, hours) {
+  if (keys.some(item => item.key === key)) {
+    throw new Error("هذا المفتاح موجود بالفعل.");
+  }
+  const createdAt = Date.now();
+  keys.unshift({
+    key,
+    createdAt,
+    expiresAt: hours === 0 ? 0 : createdAt + hours * 60 * 60 * 1000
+  });
+  saveKeys();
+  showMessage("createMessage", "تمت إضافة المفتاح: " + key, "ok");
+}
+function renderKeys() {
+  const query = $("searchKey").value.trim().toUpperCase();
+  const filtered = keys.filter(item => item.key.includes(query));
+  $("totalKeys").textContent = keys.length;
+  $("activeKeys").textContent = keys.filter(item => !isExpired(item)).length;
+  const list = $("keysList");
+  list.replaceChildren();
+
+  if (!filtered.length) {
+    const empty = document.createElement("p");
+    empty.className = "muted";
+    empty.textContent = keys.length ? "لا توجد نتائج مطابقة." : "لا توجد مفاتيح حتى الآن.";
+    list.appendChild(empty);
+    return;
+  }
+
+  filtered.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "key-item";
+
+    const code = document.createElement("div");
+    code.className = "key-code";
+    code.textContent = item.key;
+    card.appendChild(code);
+
+    const meta = document.createElement("div");
+    meta.className = "key-meta";
+    meta.textContent =
+      "تاريخ الإنشاء: " + formatDate(item.createdAt) + "\n" +
+      "تاريخ الانتهاء: " + formatDate(item.expiresAt) + "\n" +
+      "الحالة: " + (isExpired(item) ? "منتهي الصلاحية" : "ساري");
+    meta.style.whiteSpace = "pre-line";
+    if (isExpired(item)) meta.style.color = "#ff7887";
+    card.appendChild(meta);
+
+    const actions = document.createElement("div");
+    actions.className = "key-actions";
+
+    const copy = document.createElement("button");
+    copy.className = "secondary";
+    copy.textContent = "نسخ المفتاح";
+    copy.onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(item.key);
+        showMessage("createMessage", "تم نسخ المفتاح: " + item.key, "ok");
+      } catch {
+        window.prompt("انسخ المفتاح يدويًا:", item.key);
+      }
+    };
+    actions.appendChild(copy);
+
+    const remove = document.createElement("button");
+    remove.className = "danger";
+    remove.textContent = "حذف";
+    remove.onclick = () => {
+      if (!confirm("هل تريد حذف هذا المفتاح من هذه القائمة؟")) return;
+      keys = keys.filter(k => k.key !== item.key);
+      saveKeys();
+    };
+    actions.appendChild(remove);
+    card.appendChild(actions);
+    list.appendChild(card);
+  });
+}
+
+$("loginForm").addEventListener("submit", event => {
+  event.preventDefault();
+  if ($("adminPassword").value === ADMIN_PASSWORD) {
+    $("loginScreen").classList.add("hidden");
+    $("adminScreen").classList.remove("hidden");
+    $("adminPassword").value = "";
+    renderKeys();
+  } else {
+    showMessage("loginMessage", "مفتاح الإدارة خاطئ.");
+  }
+});
+
+$("logoutBtn").onclick = () => {
+  $("adminScreen").classList.add("hidden");
+  $("loginScreen").classList.remove("hidden");
+};
+
+$("randomTab").onclick = () => setMode("random");
+$("customTab").onclick = () => setMode("custom");
+function setMode(next) {
+  mode = next;
+  $("randomMode").classList.toggle("hidden", mode !== "random");
+  $("customMode").classList.toggle("hidden", mode !== "custom");
+  $("randomTab").classList.toggle("active", mode === "random");
+  $("customTab").classList.toggle("active", mode === "custom");
+  $("randomTab").classList.toggle("secondary", mode !== "random");
+  $("customTab").classList.toggle("secondary", mode !== "custom");
+  hideMessage("createMessage");
+}
+
+function setupCustomDuration(prefix) {
+  $(prefix + "Duration").addEventListener("change", () => {
+    const custom = $(prefix + "Duration").value === "custom";
+    $(prefix + "CustomDuration").classList.toggle("hidden", !custom);
+  });
+}
+setupCustomDuration("random");
+setupCustomDuration("custom");
+
+$("generateBtn").onclick = () => {
+  hideMessage("createMessage");
+  try {
+    const hours = getDuration("random");
+    let key;
+    do { key = makeRandomKey(); }
+    while (keys.some(item => item.key === key));
+    addKey(key, hours);
+  } catch (error) {
+    showMessage("createMessage", error.message);
+  }
+};
+
+$("addCustomBtn").onclick = () => {
+  hideMessage("createMessage");
+  try {
+    const key = normalizeKey($("customKey").value);
+    const hours = getDuration("custom");
+    addKey(key, hours);
+    $("customKey").value = "";
+  } catch (error) {
+    showMessage("createMessage", error.message);
+  }
+};
+
+$("searchKey").addEventListener("input", renderKeys);
+
+$("exportBtn").onclick = () => {
+  const blob = new Blob([JSON.stringify(keys, null, 2)], {
+    type: "application/json;charset=utf-8"
+  });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "mosko-keys.json";
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
+$("testServerBtn").onclick = async () => {
+  const url = $("serverUrl").value.trim();
+  if (!url) {
+    showMessage("serverMessage", "أدخل رابط السيرفر أولًا.");
+    return;
+  }
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol !== "https:" && parsed.hostname !== "localhost") {
+      throw new Error("استخدم رابط HTTPS.");
+    }
+    showMessage("serverMessage", "جارٍ اختبار الاتصال...", "ok");
+    const response = await fetch(url, {
+      method: "GET",
+      headers: { "Accept": "application/json" }
+    });
+    const body = await response.text();
+    if (!response.ok) {
+      throw new Error("رد السيرفر برمز HTTP " + response.status);
+    }
+    showMessage(
+      "serverMessage",
+      "وصل رد من السيرفر (HTTP " + response.status + "). هذا لا يؤكد أن API المفاتيح جاهز. الرد: " + body.slice(0,180),
+      "ok"
+    );
+  } catch (error) {
+    showMessage(
+      "serverMessage",
+      "تعذر اختبار الاتصال: " + error.message +
+      " — قد يكون السبب CORS أو أن السيرفر لا يقبل GET."
+    );
+  }
+};
+
+renderKeys();
+</script>
+</body>
+</html>
