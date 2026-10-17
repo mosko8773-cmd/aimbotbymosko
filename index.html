@@ -3,414 +3,238 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#090909">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>MOSKO CHEATS</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-
 <style>
-:root {
-  --red:#ff2638;
-  --dark:#090909;
-  --panel:rgba(20,20,23,.94);
-  --muted:#aaa;
+*{box-sizing:border-box}
+:root{--red:#ff2345;--bg:#080910;--panel:#131522}
+body{
+ margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+ padding:20px;background:radial-gradient(ellipse at top,#45101e 0%,#15101b 38%,#07080d 100%);
+ color:#fff;font-family:Arial,sans-serif;overflow-x:hidden
 }
-* {box-sizing:border-box}
-[hidden],.hidden {display:none!important}
-
-body {
-  margin:0;
-  min-height:100vh;
-  padding:24px 15px;
-  display:grid;
-  place-items:center;
-  overflow-x:hidden;
-  background:
-    radial-gradient(ellipse at 50% 0%,#4a0a12 0%,transparent 55%),
-    linear-gradient(145deg,#090909,#10090b 55%,#050505);
-  color:#fff;
-  font-family:'Tajawal',Arial,sans-serif;
+#particles{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+.card{
+ position:relative;z-index:1;width:100%;max-width:420px;text-align:center;
+ padding:28px 23px;background:rgba(15,16,27,.94);
+ border:1px solid #43202e;border-radius:22px;
+ box-shadow:0 0 35px #ff234522,0 20px 70px #0008;
+ animation:appear .7s ease
 }
-#particles {
-  position:fixed;inset:0;width:100%;height:100%;
-  pointer-events:none;z-index:0;
+@keyframes appear{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.avatar{
+ width:112px;height:112px;border-radius:50%;object-fit:cover;
+ border:3px solid var(--red);box-shadow:0 0 24px #ff234577;
+ margin:0 auto 16px;display:block
 }
-.glow {
-  position:fixed;width:240px;height:240px;
-  background:#ff1b3020;filter:blur(70px);
-  border-radius:50%;pointer-events:none;
-  animation:float 8s ease-in-out infinite alternate;
+h1{margin:5px 0;color:var(--red);letter-spacing:2px;text-shadow:0 0 15px #ff234566}
+.subtitle{color:#a9acbb;font-size:14px;line-height:1.6}
+input,select,button{
+ width:100%;padding:13px;margin-top:12px;border-radius:10px;
+ font-size:15px
 }
-.glow.one {top:5%;left:-90px}
-.glow.two {bottom:0;right:-100px;animation-delay:-4s}
-
-.container {
-  position:relative;z-index:1;
-  width:100%;max-width:420px;
-  padding:30px 23px 23px;
-  border:1px solid #67232b;
-  border-radius:24px;
-  background:var(--panel);
-  box-shadow:0 20px 70px #000a,0 0 35px #ff26380b;
-  text-align:center;
-  backdrop-filter:blur(15px);
-  animation:appear .65s ease both;
+input{
+ background:#090a12;color:white;border:1px solid #36384b;
+ outline:none;text-align:center;direction:ltr
 }
-.container:before {
-  content:"";position:absolute;top:0;left:15%;
-  width:70%;height:1px;
-  background:linear-gradient(90deg,transparent,#ff5260,transparent);
-}
-.brand {
-  margin:0 0 9px;
-  color:var(--red);font-size:34px;
-  font-weight:900;letter-spacing:1px;
-  text-shadow:0 0 20px #ff26384b;
-  animation:flicker 5s infinite;
-}
-.subtitle {color:#bbb;font-size:15px;margin:0 0 23px}
-.langbar {display:flex;gap:8px;justify-content:center;margin-bottom:22px}
-.langbar button {
-  flex:1;padding:8px 4px;border:1px solid #383838;
-  border-radius:9px;background:#171717;color:#ddd;
-  font:700 12px 'Tajawal',sans-serif;cursor:pointer;
-  transition:.25s;
-}
-.langbar button.active,.langbar button:hover {
-  color:#fff;border-color:var(--red);
-  background:#381116;box-shadow:0 0 14px #ff263820;
-}
-input {
-  width:100%;padding:16px 10px;
-  color:white;background:#090909;
-  border:1px solid #393939;border-radius:12px;
-  outline:none;text-align:center;direction:ltr;
-  font:14px Arial,sans-serif;
-  transition:.25s;
-}
-input:focus {border-color:var(--red);box-shadow:0 0 18px #ff26382a}
-button.action,.social {
-  width:100%;min-height:49px;margin-top:13px;
-  padding:12px;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  color:#fff;text-decoration:none;
-  font:800 15px 'Tajawal',sans-serif;
-  cursor:pointer;transition:transform .22s,filter .22s,box-shadow .22s;
-}
-button.action:hover,.social:hover {
-  transform:translateY(-3px);filter:brightness(1.13);
-  box-shadow:0 8px 22px #0007;
-}
-button:disabled {opacity:.65;cursor:wait;transform:none!important}
-.primary,.happ {
-  border:0;background:linear-gradient(115deg,#ff3647,#a80017);
-  box-shadow:0 5px 20px #ff263820;
-}
-.social {background:#181818;border:1px solid #383838}
-.youtube {border-color:#77232a}
-.telegram {border-color:#1d5a77}
-.avatar {
-  width:130px;height:130px;object-fit:cover;
-  border-radius:50%;border:3px solid var(--red);
-  box-shadow:0 0 0 7px #ff263811,0 0 35px #ff26384a;
-  margin:12px 0 20px;
-  animation:avatarIn .7s ease both;
-}
-.message {
-  min-height:22px;margin:13px 0 0;
-  font-size:14px;font-weight:700;line-height:1.6;
-  overflow-wrap:anywhere;
-}
-.error {color:#ff6573}
-.success {color:#63edac}
-.footer {margin-top:24px;color:#686868;font:10px Arial,sans-serif;letter-spacing:1.5px}
-.badge {
-  display:inline-block;border:1px solid #4c2025;
-  border-radius:30px;padding:5px 12px;
-  color:#ff7b86;background:#260c10;
-  font-size:11px;margin-bottom:14px;
-}
-@keyframes appear {from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-@keyframes avatarIn {from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
-@keyframes float {from{transform:translate(0,0)}to{transform:translate(60px,-40px)}}
-@keyframes flicker {0%,96%,100%{text-shadow:0 0 20px #ff26384b}98%{text-shadow:0 0 4px #ff2638}}
-@media(prefers-reduced-motion:reduce) {
-  *,*:before,*:after {animation:none!important;transition:none!important}
-}
+input:focus{border-color:var(--red);box-shadow:0 0 12px #ff234533}
+button{border:0;background:var(--red);color:white;font-weight:bold;cursor:pointer;transition:.2s}
+button:hover{filter:brightness(1.15);transform:translateY(-1px)}
+select{background:#090a12;color:white;border:1px solid #36384b}
+#message{min-height:22px;margin-top:12px;font-size:14px;line-height:1.5}
+.error{color:#ff657b}.success{color:#5affbd}.info{color:#ffc66b}
+.hidden{display:none!important}
+.links{display:flex;gap:10px;margin-top:12px}
+.links a{flex:1;text-decoration:none;color:white;padding:12px 8px;border-radius:10px;font-size:14px;font-weight:bold}
+.youtube{background:#d71935}.telegram{background:#167db2}
+.footer{font-size:11px;color:#73788c;margin-top:22px}
 </style>
 </head>
 <body>
+<canvas id="particles"></canvas>
 
-<canvas id="particles" aria-hidden="true"></canvas>
-<div class="glow one"></div>
-<div class="glow two"></div>
+<main class="card">
+  <div id="loginPage">
+    <img class="avatar" src="https://fastupload.live/do.php?img=19591" alt="MOSKO profile">
+    <h1>MOSKO CHEATS</h1>
+    <p class="subtitle" id="subtitle">أدخل مفتاحك للمتابعة</p>
 
-<main class="container" id="loginPage">
-  <div class="badge">✦ OFFICIAL ACCESS ✦</div>
-  <h1 class="brand">MOSKO CHEATS</h1>
-  <p class="subtitle" id="subtitle">أدخل مفتاحك للمتابعة</p>
+    <select id="language" aria-label="Language">
+      <option value="ar">العربية</option>
+      <option value="en">English</option>
+      <option value="es">Español</option>
+    </select>
 
-  <div class="langbar">
-    <button type="button" data-lang="ar" class="active">العربية</button>
-    <button type="button" data-lang="en">English</button>
-    <button type="button" data-lang="es">Español</button>
+    <form id="keyForm">
+      <input id="keyInput" type="text" autocomplete="off"
+        placeholder="MOSKO-XXXXXXXXXXXX" maxlength="18" dir="ltr">
+      <button id="submitBtn" type="submit">تحقق من المفتاح</button>
+    </form>
+    <div id="message" role="status"></div>
   </div>
 
-  <form id="keyForm">
-    <input id="keyInput" type="text"
-      placeholder="MOSKO-XXXXXXXXXXXX-12H"
-      autocomplete="off" autocapitalize="characters"
-      spellcheck="false" aria-label="Access key">
-    <button class="action primary" id="verifyButton" type="submit">
-      تحقق من المفتاح
-    </button>
-  </form>
-  <p id="loginMessage" class="message" role="status" aria-live="polite"></p>
-  <div class="footer">MOSKO CHEATS © 2026</div>
-</main>
-
-<main class="container hidden" id="dashboard">
-  <div class="badge">✦ ACCESS GRANTED ✦</div>
-  <h1 class="brand">MOSKO CHEATS</h1>
-
-  <img class="avatar"
-    src="https://fastupload.live/do.php?img=19591"
-    alt="MOSKO profile"
-    referrerpolicy="no-referrer">
-
-  <p class="subtitle" id="welcomeText">مرحباً بك! تم فتح الصفحة بنجاح.</p>
-
-  <a class="social youtube"
-     href="https://youtube.com/@MOSKO_CHEATS"
-     target="_blank" rel="noopener noreferrer" id="youtubeLink">
-     ▶ قناة يوتيوب
-  </a>
-
-  <a class="social telegram"
-     href="https://t.me/MOSKOCHEATS"
-     target="_blank" rel="noopener noreferrer" id="telegramLink">
-     ✈ قناة تيليجرام
-  </a>
-
-  <button class="action happ" id="happButton" type="button">
-    🚀 Add to Happ
-  </button>
-
-  <p id="happMessage" class="message" role="status" aria-live="polite"></p>
-  <div class="footer">MOSKO CHEATS © 2026</div>
+  <div id="successPage" class="hidden">
+    <img class="avatar" src="https://fastupload.live/do.php?img=19591" alt="MOSKO profile">
+    <h1>MOSKO CHEATS</h1>
+    <p class="subtitle" id="welcome"></p>
+    <button id="happBtn">Add to Happ</button>
+    <div class="links">
+      <a class="youtube" href="https://youtube.com/@MOSKO_CHEATS" target="_blank" rel="noopener">YouTube</a>
+      <a class="telegram" href="https://t.me/MOSKOCHEATS" target="_blank" rel="noopener">Telegram</a>
+    </div>
+  </div>
+  <div class="footer">MOSKO CHEATS • KEY SYSTEM</div>
 </main>
 
 <script>
-"use strict";
-
-/* Server endpoint supplied by MOSKO */
-const API_URL = "https://viku.urlking.in/connect/moskofreekey";
+const API_URL = "https://mosko8773-cmd.github.io/aimbotbymosko/api.html";
 
 /*
-  IMPORTANT:
-  Paste your complete original happ://routing/onadd/... URL here.
-  Do not use a shortened or modified encoded link.
+  ملاحظة:
+  api.html على GitHub Pages صفحة ثابتة وليست API خلفية تلقائيًا.
+  هذا الكود يحاول إرسال POST إليها؛ يجب أن يكون هناك endpoint فعلي
+  يقبل الطلب ويرجع JSON حتى ينجح التحقق من المفاتيح.
 */
 const HAPP_LINK = "PASTE_YOUR_COMPLETE_HAPP_LINK_HERE";
 
-const words = {
+const translations = {
  ar:{
-  dir:"rtl",sub:"أدخل مفتاحك للمتابعة",verify:"تحقق من المفتاح",
-  empty:"اكتب الكود أولاً!",incomplete:"الكود مش كامل!",
-  wrong:"الكود خاطئ أو غير صالح!",checking:"جارٍ التحقق من المفتاح...",
-  server:"تعذر الاتصال بالسيرفر. تحقق من إعداداته وحاول مجدداً.",
-  format:"رد السيرفر غير متوقع. يجب التأكد من صيغة API.",
-  welcome:"مرحباً بك! تم فتح الصفحة بنجاح.",
-  yt:"▶ قناة يوتيوب",tg:"✈ قناة تيليجرام",happ:"🚀 Add to Happ",
-  missing:"ضع رابط Happ الكامل داخل الكود أولاً.",
-  opening:"جارٍ فتح Happ..."
+  subtitle:"أدخل مفتاحك للمتابعة",
+  placeholder:"MOSKO-XXXXXXXXXXXX",
+  submit:"تحقق من المفتاح",
+  empty:"اكتب الكود أولاً",
+  incomplete:"الكود مش كامل أو صيغته خاطئة",
+  checking:"جارٍ التحقق من المفتاح...",
+  wrong:"الكود خاطئ أو منتهي الصلاحية",
+  offline:"تعذر الاتصال بالسيرفر. تحقق من إعدادات API.",
+  welcome:"تم التحقق من المفتاح بنجاح!",
+  happ:"إضافة إلى Happ"
  },
  en:{
-  dir:"ltr",sub:"Enter your key to continue",verify:"VERIFY KEY",
-  empty:"Please enter a key first!",incomplete:"The key is incomplete!",
-  wrong:"Incorrect or invalid key!",checking:"Verifying your key...",
-  server:"Could not connect to the server. Check its settings and try again.",
-  format:"Unexpected server response. Confirm the API format.",
-  welcome:"Welcome! Access granted.",
-  yt:"▶ YouTube Channel",tg:"✈ Telegram Channel",happ:"🚀 Add to Happ",
-  missing:"Add your complete Happ link to the code first.",
-  opening:"Opening Happ..."
+  subtitle:"Enter your key to continue",
+  placeholder:"MOSKO-XXXXXXXXXXXX",
+  submit:"Verify key",
+  empty:"Please enter a key first",
+  incomplete:"The key is incomplete or has an invalid format",
+  checking:"Checking your key...",
+  wrong:"Invalid or expired key",
+  offline:"Could not connect to the server. Check the API setup.",
+  welcome:"Key verified successfully!",
+  happ:"Add to Happ"
  },
  es:{
-  dir:"ltr",sub:"Introduce tu clave para continuar",verify:"VERIFICAR CLAVE",
-  empty:"¡Introduce una clave primero!",incomplete:"¡La clave está incompleta!",
-  wrong:"¡Clave incorrecta o no válida!",checking:"Verificando tu clave...",
-  server:"No se pudo conectar al servidor. Comprueba la configuración.",
-  format:"Respuesta inesperada. Confirma el formato de la API.",
-  welcome:"¡Bienvenido! Acceso concedido.",
-  yt:"▶ Canal de YouTube",tg:"✈ Canal de Telegram",happ:"🚀 Add to Happ",
-  missing:"Añade primero el enlace completo de Happ.",
-  opening:"Abriendo Happ..."
+  subtitle:"Introduce tu clave para continuar",
+  placeholder:"MOSKO-XXXXXXXXXXXX",
+  submit:"Verificar clave",
+  empty:"Introduce una clave primero",
+  incomplete:"La clave está incompleta o tiene un formato incorrecto",
+  checking:"Verificando la clave...",
+  wrong:"Clave incorrecta o caducada",
+  offline:"No se pudo conectar al servidor. Comprueba la API.",
+  welcome:"¡Clave verificada correctamente!",
+  happ:"Añadir a Happ"
  }
 };
 
-let lang = "ar";
-const $ = id => document.getElementById(id);
-
-function message(id,text,type="error") {
-  $(id).textContent = text;
-  $(id).className = "message " + type;
+let lang="ar";
+const $=id=>document.getElementById(id);
+function msg(text,type="error"){
+ $("message").className=type;
+ $("message").textContent=text;
 }
-
-function setLanguage(code) {
-  lang = code;
-  const t = words[code];
-  document.documentElement.lang = code;
-  document.documentElement.dir = t.dir;
-  $("subtitle").textContent = t.sub;
-  $("verifyButton").textContent = t.verify;
-  $("keyInput").placeholder = "MOSKO-XXXXXXXXXXXX-12H";
-  $("welcomeText").textContent = t.welcome;
-  $("youtubeLink").textContent = t.yt;
-  $("telegramLink").textContent = t.tg;
-  $("happButton").textContent = t.happ;
-  document.querySelectorAll("[data-lang]").forEach(b =>
-    b.classList.toggle("active",b.dataset.lang === code)
-  );
-  message("loginMessage","");
-  message("happMessage","");
+function setLanguage(value){
+ lang=value;
+ const t=translations[lang];
+ document.documentElement.lang=lang;
+ document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+ $("subtitle").textContent=t.subtitle;
+ $("keyInput").placeholder=t.placeholder;
+ $("submitBtn").textContent=t.submit;
+ $("happBtn").textContent=t.happ;
+ $("language").value=lang;
+ msg("");
 }
+$("language").addEventListener("change",e=>setLanguage(e.target.value));
 
-document.querySelectorAll("[data-lang]").forEach(b =>
-  b.addEventListener("click",() => setLanguage(b.dataset.lang))
-);
+$("keyForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ const t=translations[lang];
+ const key=$("keyInput").value.trim().toUpperCase();
 
-$("keyForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  const t = words[lang];
-  const key = $("keyInput").value.trim().toUpperCase();
+ if(!key){msg(t.empty);return}
+ if(!/^MOSKO-[A-Z0-9]{12}$/.test(key)){
+   msg(t.incomplete);return;
+ }
 
-  if (!key) {
-    message("loginMessage",t.empty);
-    return;
-  }
+ $("submitBtn").disabled=true;
+ $("submitBtn").textContent=t.checking;
+ msg(t.checking,"info");
 
-  if (!/^MOSKO-[A-Z0-9]{12}-12H$/.test(key)) {
-    const partial = key === "MOSKO" || key.startsWith("MOSKO-");
-    message("loginMessage",partial ? t.incomplete : t.wrong);
-    return;
-  }
+ try{
+   const response=await fetch(API_URL,{
+     method:"POST",
+     headers:{
+       "Content-Type":"application/json",
+       "Accept":"application/json"
+     },
+     body:JSON.stringify({key})
+   });
 
-  const button = $("verifyButton");
-  button.disabled = true;
-  message("loginMessage",t.checking,"success");
+   if(!response.ok) throw new Error("HTTP "+response.status);
+   const data=await response.json();
 
-  try {
-    const response = await fetch(API_URL,{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json",
-        "Accept":"application/json"
-      },
-      body:JSON.stringify({key:key})
-    });
-
-    const text = await response.text();
-    let data;
-
-    try {
-      data = JSON.parse(text);
-    } catch {
-      message("loginMessage",t.format);
-      return;
-    }
-
-    if (!response.ok) {
-      message("loginMessage",t.wrong);
-      return;
-    }
-
-    /*
-      The server must return an explicit success value.
-      Adjust these fields to match the actual API response.
-    */
-    const accepted =
-      data.valid === true ||
-      data.success === true ||
-      data.status === "valid";
-
-    if (!accepted) {
-      message("loginMessage",t.wrong);
-      return;
-    }
-
-    $("loginPage").classList.add("hidden");
-    $("dashboard").classList.remove("hidden");
-    window.scrollTo({top:0,behavior:"smooth"});
-
-  } catch (error) {
-    console.error("MOSKO server error:",error);
-    message("loginMessage",t.server);
-  } finally {
-    button.disabled = false;
-  }
+   // لا نقبل المفتاح إلا إذا أكد السيرفر نجاح التحقق صراحةً.
+   if(data.valid===true || data.success===true){
+     $("loginPage").classList.add("hidden");
+     $("successPage").classList.remove("hidden");
+     $("welcome").textContent=t.welcome;
+   }else{
+     msg(data.message || t.wrong);
+   }
+ }catch(error){
+   msg(t.offline);
+ }finally{
+   $("submitBtn").disabled=false;
+   $("submitBtn").textContent=t.submit;
+ }
 });
 
-$("happButton").addEventListener("click",() => {
-  const t = words[lang];
-
-  if (!HAPP_LINK.startsWith("happ://routing/onadd/")) {
-    message("happMessage",t.missing);
-    return;
-  }
-
-  message("happMessage",t.opening,"success");
-  window.location.href = HAPP_LINK;
+$("happBtn").addEventListener("click",()=>{
+ if(HAPP_LINK.startsWith("happ://")){
+   window.location.href=HAPP_LINK;
+ }else{
+   alert("ضع رابط Happ الكامل داخل متغير HAPP_LINK في الكود.");
+ }
 });
 
+/* تأثير الجسيمات */
+const canvas=$("particles"),ctx=canvas.getContext("2d");
+let particles=[];
+function resize(){
+ canvas.width=window.innerWidth;
+ canvas.height=window.innerHeight;
+ particles=Array.from({length:55},()=>({
+   x:Math.random()*canvas.width,
+   y:Math.random()*canvas.height,
+   r:Math.random()*2+0.5,
+   speed:Math.random()*0.6+0.2
+ }));
+}
+function animate(){
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+ for(const p of particles){
+   p.y-=p.speed;
+   if(p.y<0){p.y=canvas.height;p.x=Math.random()*canvas.width}
+   ctx.beginPath();
+   ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+   ctx.fillStyle="rgba(255,45,75,.65)";
+   ctx.fill();
+ }
+ requestAnimationFrame(animate);
+}
+window.addEventListener("resize",resize);
+resize();animate();
 setLanguage("ar");
-
-/* Lightweight animated background particles */
-(() => {
-  const canvas = $("particles");
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return;
-
-  let width,height,particles=[];
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  function resize() {
-    const dpr = Math.min(window.devicePixelRatio || 1,2);
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width*dpr;
-    canvas.height = height*dpr;
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    const count = reduced ? 0 : Math.min(45,Math.floor(width/18));
-    particles = Array.from({length:count},() => ({
-      x:Math.random()*width,y:Math.random()*height,
-      r:Math.random()*1.7+.5,
-      speed:Math.random()*.35+.12,
-      alpha:Math.random()*.5+.15
-    }));
-  }
-
-  function draw() {
-    ctx.clearRect(0,0,width,height);
-    for (const p of particles) {
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(255,45,65,${p.alpha})`;
-      ctx.fill();
-      if (!reduced) {
-        p.y -= p.speed;
-        if (p.y < -5) {p.y=height+5;p.x=Math.random()*width;}
-      }
-    }
-    if (!reduced) requestAnimationFrame(draw);
-  }
-
-  window.addEventListener("resize",resize);
-  resize();
-  draw();
-})();
 </script>
 </body>
 </html>
