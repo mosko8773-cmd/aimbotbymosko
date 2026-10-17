@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MOSKO CHEATS | API</title>
+<style>
+:root {
+  --red:#ff2947; --bg:#090a11; --panel:#131521;
+  --border:#2b2e40; --muted:#a2a8ba; --green:#36dfa0;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;padding:22px;background:radial-gradient(ellipse at top,#32101c,var(--bg) 65%);
+  color:#f6f6fb;font-family:Arial,sans-serif;min-height:100vh
+}
+main{max-width:850px;margin:auto}
+header,.panel{
+  background:var(--panel);border:1px solid var(--border);
+  padding:22px;border-radius:16px;margin-bottom:17px
+}
+h1{color:var(--red);margin-top:0}
+h2{font-size:19px}
+p{color:var(--muted);line-height:1.7}
+label{display:block;margin-top:13px;font-size:14px}
+input,select,textarea{
+  display:block;width:100%;padding:12px;margin-top:7px;
+  color:white;background:#090b13;border:1px solid var(--border);
+  border-radius:9px;font:inherit
+}
+textarea{min-height:100px;direction:ltr;text-align:left}
+button{
+  border:0;border-radius:9px;background:var(--red);color:white;
+  padding:12px 15px;margin-top:13px;cursor:pointer;font-weight:bold
+}
+button.secondary{background:#303347}
+pre{
+  direction:ltr;text-align:left;white-space:pre-wrap;overflow-wrap:anywhere;
+  background:#080910;border:1px solid var(--border);padding:15px;
+  border-radius:10px;min-height:60px;color:var(--green)
+}
+.status{padding:12px;border-radius:9px;background:#202333;margin-top:12px}
+.small{font-size:12px}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>⚡ MOSKO CHEATS API</h1>
+  <p>لوحة اختبار API لمفاتيح MOSKO. هذه الواجهة لا تستبدل السيرفر الخلفي.</p>
+  <div class="status" id="connectionStatus">الحالة: لم يتم الاتصال بأي سيرفر بعد.</div>
+</header>
+
+<section class="panel">
+  <h2>1. إعداد رابط API</h2>
+  <label for="apiUrl">رابط السيرفر</label>
+  <input id="apiUrl" type="url" placeholder="https://your-domain.com/api/keys" dir="ltr">
+  <label for="apiSecret">رمز API (اختياري)</label>
+  <input id="apiSecret" type="password" placeholder="لا تضع كلمة مرور الإدارة هنا" dir="ltr">
+  <button id="testBtn">اختبار الاتصال</button>
+  <p class="small">اختبار GET فقط. نجاحه لا يثبت أن السيرفر يدعم إضافة المفاتيح أو التحقق منها.</p>
+</section>
+
+<section class="panel">
+  <h2>2. إضافة مفتاح إلى السيرفر</h2>
+  <label for="newKey">المفتاح</label>
+  <input id="newKey" placeholder="MOSKO-ABC123DEF456" dir="ltr">
+  <label for="duration">مدة الصلاحية</label>
+  <select id="duration">
+    <option value="1">ساعة واحدة</option>
+    <option value="6">6 ساعات</option>
+    <option value="12" selected>12 ساعة</option>
+    <option value="24">24 ساعة</option>
+    <option value="72">3 أيام</option>
+    <option value="168">7 أيام</option>
+    <option value="720">30 يومًا</option>
+    <option value="0">بدون انتهاء تلقائي</option>
+  </select>
+  <button id="addBtn">إرسال طلب إضافة المفتاح</button>
+  <p class="small">سيُرسل POST بصيغة JSON. يجب أن يدعم السيرفر هذه العملية حتى تنجح.</p>
+</section>
+
+<section class="panel">
+  <h2>3. التحقق من مفتاح</h2>
+  <label for="checkKey">المفتاح المراد التحقق منه</label>
+  <input id="checkKey" placeholder="MOSKO-ABC123DEF456" dir="ltr">
+  <button id="checkBtn">التحقق من المفتاح</button>
+  <p class="small">يُرسل POST إلى مسار التحقق الذي تحدده أدناه.</p>
+  <label for="verifyPath">مسار التحقق</label>
+  <input id="verifyPath" value="/verify" dir="ltr">
+</section>
+
+<section class="panel">
+  <h2>4. نتيجة آخر طلب</h2>
+  <div id="resultStatus" class="status">بانتظار طلب...</div>
+  <pre id="result">{}</pre>
+  <button id="clearBtn" class="secondary">مسح النتيجة</button>
+</section>
+
+<section class="panel">
+  <h2>شكل البيانات المقترح</h2>
+  <pre>{
+  "key": "MOSKO-ABC123DEF456",
+  "durationHours": 12
+}</pre>
+  <p>لأمان أفضل، يجب على السيرفر التحقق من صلاحية المفتاح وتاريخ انتهائه، وحفظ المفاتيح في قاعدة بيانات، وحماية عمليات الإدارة بمصادقة حقيقية.</p>
+</section>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+
+function showResult(message, data, ok=false) {
+  $("resultStatus").textContent = message;
+  $("resultStatus").style.color = ok ? "#36dfa0" : "#ff8291";
+  $("result").textContent =
+    typeof data === "string" ? data : JSON.stringify(data, null, 2);
+}
+
+function baseUrl() {
+  const value = $("apiUrl").value.trim();
+  if (!value) throw new Error("أدخل رابط API أولًا.");
+  const url = new URL(value);
+  if (url.protocol !== "https:" && url.hostname !== "localhost") {
+    throw new Error("استخدم HTTPS لرابط السيرفر.");
+  }
+  return url;
+}
+
+function headers() {
+  const h = {"Accept":"application/json"};
+  const secret = $("apiSecret").value.trim();
+  if (secret) h["Authorization"] = "Bearer " + secret;
+  return h;
+}
+
+async function request(url, options={}) {
+  const response = await fetch(url, {
+    ...options,
+    headers: {...headers(), ...(options.headers || {})}
+  });
+  const text = await response.text();
+  let data;
+  try { data = JSON.parse(text); }
+  catch { data = text; }
+
+  if (!response.ok) {
+    throw new Error("HTTP " + response.status + ": " +
+      (typeof data === "string" ? data : JSON.stringify(data)));
+  }
+  return {status:response.status, data};
+}
+
+$("testBtn").onclick = async () => {
+  try {
+    $("connectionStatus").textContent = "الحالة: جارٍ الاختبار...";
+    const url = baseUrl();
+    const result = await request(url.toString(), {method:"GET"});
+    $("connectionStatus").textContent =
+      "تم استلام رد HTTP " + result.status +
+      ". تحقق من الرد للتأكد من وظيفة المسار.";
+    showResult("وصل رد من السيرفر", result.data, true);
+  } catch (error) {
+    $("connectionStatus").textContent = "تعذر الاتصال بالسيرفر.";
+    showResult("فشل الاختبار: " + error.message, {
+      hint:"قد يكون المسار غير صحيح، أو السيرفر لا يدعم GET، أو يوجد خطأ CORS."
+    });
+  }
+};
+
+$("addBtn").onclick = async () => {
+  try {
+    const key = $("newKey").value.trim().toUpperCase();
+    if (!/^MOSKO-[A-Z0-9]{12}$/.test(key)) {
+      throw new Error("اكتب مفتاحًا بصيغة MOSKO- متبوعًا بـ 12 حرفًا أو رقمًا.");
+    }
+    const url = baseUrl();
+    const payload = {
+      key,
+      durationHours:Number($("duration").value)
+    };
+    const result = await request(url.toString(), {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(payload)
+    });
+    showResult("رد السيرفر على طلب الإضافة", result.data, true);
+  } catch (error) {
+    showResult("تعذر إضافة المفتاح: " + error.message);
+  }
+};
+
+$("checkBtn").onclick = async () => {
+  try {
+    const key = $("checkKey").value.trim().toUpperCase();
+    if (!/^MOSKO-[A-Z0-9]{12}$/.test(key)) {
+      throw new Error("صيغة المفتاح غير صحيحة.");
+    }
+    const base = baseUrl();
+    const path = $("verifyPath").value.trim();
+    const endpoint = new URL(path, base);
+    const result = await request(endpoint.toString(), {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({key})
+    });
+    showResult("نتيجة التحقق من السيرفر", result.data, true);
+  } catch (error) {
+    showResult("تعذر التحقق: " + error.message);
+  }
+};
+
+$("clearBtn").onclick = () => {
+  $("resultStatus").textContent = "بانتظار طلب...";
+  $("result").textContent = "{}";
+};
+</script>
+</body>
+</html>
